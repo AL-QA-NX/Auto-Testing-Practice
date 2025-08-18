@@ -72,12 +72,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
-                <configuration>
-                    <providers>
-                        <provider>junit-platform</provider>  <!-- Для JUnit 5 -->
-                        <provider>testng</provider>          <!-- Для TestNG -->
-                    </providers>
-                </configuration>
             </plugin>
 
             <!-- Allure Maven plugin для отчетов -->
