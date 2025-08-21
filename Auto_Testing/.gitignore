@@ -1,3 +1,4 @@
+### Maven ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -36,3 +37,17 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+
+### Log files ###
+*.log
+
+### Package Files ###
+*.jar
+*.war
+*.ear
+
+### Allure reports ###
+allure-results/
+allure-report/
+target/site/allure-maven-plugin/
