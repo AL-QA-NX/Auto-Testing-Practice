@@ -1,5 +1,5 @@
-package Lebedev_Auto_Testing;
-public class Main
+package lebedev.auto.testing.task1;
+public class Task1
 {
     public static void main(String[] args) {
         System.out.println("Hello and welcome!");

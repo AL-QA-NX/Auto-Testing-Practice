@@ -20,6 +20,8 @@
         <testng.version>7.11.0</testng.version>
         <allure.version>2.29.1</allure.version>
         <restassured.version>5.5.5</restassured.version>
+        <junit-platform-launcher.version>1.9.3</junit-platform-launcher.version>
+        <slf4j-simple.version>2.0.12</slf4j-simple.version>
         <maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>
         <allure.maven.plugin.version>2.12.0</allure.maven.plugin.version>
     </properties>
@@ -63,6 +65,24 @@
             <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- JUnit Platform Launcher -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit-platform-launcher.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Slf4j-simple -->
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -72,6 +92,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.junit5.AllureJunit5</value>
+                        </property>
+                    </properties>
+                </configuration>
             </plugin>
 
             <!-- Allure Maven plugin для отчетов -->
