@@ -7,7 +7,6 @@
     <list default="true" id="790ebd36-5a7f-480b-8335-82a98bb4d644" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Lebedev_Auto_Testing/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lebedev/auto/testing/task1/Task1.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,29 +43,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Launching_Class.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.Point.executor": "Run",
-    "Application.Task1.executor": "Run",
-    "Application.lebedev.auto.testing.task1.Task1.executor": "Run",
-    "Application.main.executor": "Run",
-    "JUnit.PointTests.executor": "Run",
-    "Maven.Auto_Testing [compile].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_directory_selection": "C:/GitRepositories/Auto-Testing-Practice/Auto_Testing/src/test/java",
-    "onboarding.tips.debug.path": "C:/GitRepositories/Auto-Testing-Practice/Auto_Testing/src/main/java/Lebedev_Auto_Testing/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Launching_Class.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Point.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task1.executor&quot;: &quot;Run&quot;,
+    &quot;Application.lebedev.auto.testing.task1.Task1.executor&quot;: &quot;Run&quot;,
+    &quot;Application.main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PointTests.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Auto_Testing [compile].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/GitRepositories/Auto-Testing-Practice/Auto_Testing/src/test/java&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/GitRepositories/Auto-Testing-Practice/Auto_Testing/src/main/java/Lebedev_Auto_Testing/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="lebedev.auto.testing.task3" />
