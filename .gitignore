@@ -15,3 +15,6 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+Task4-6/.idea/misc.xml
+Auto_Testing/.idea/workspace.xml
+Task4-6/.idea/vcs.xml
