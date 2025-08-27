@@ -4,36 +4,19 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class GroupCreationTest {
-  JavascriptExecutor js;
   private WebDriver wd;
-  private Map<String, Object> vars;
 
   @BeforeEach
   public void setUp() {
     wd = new FirefoxDriver();
-    js = (JavascriptExecutor) wd;
-    vars = new HashMap<String, Object>();
     
     // 1 | open | http://localhost/addressbook/ |
     wd.get("http://localhost/addressbook/");
     login("admin", "secret");
-  }
-
-  protected void login(String username, String password) {
-    // 2 | type | name=user | admin
-    wd.findElement(By.name("user")).sendKeys(username);
-    // 3 | type | name=pass | secret
-    wd.findElement(By.name("pass")).sendKeys(password);
-    // 4 | click | xpath=//input[@value='Login'] |
-    wd.findElement(By.xpath("//input[@value=\'Login\']")).click();
   }
 
   @Test
@@ -54,6 +37,15 @@ public class GroupCreationTest {
   public void tearDown() {
     logout();
     wd.quit();
+  }
+
+  public void login(String username, String password) {
+    // 2 | type | name=user | admin
+    wd.findElement(By.name("user")).sendKeys(username);
+    // 3 | type | name=pass | secret
+    wd.findElement(By.name("pass")).sendKeys(password);
+    // 4 | click | xpath=//input[@value='Login'] |
+    wd.findElement(By.xpath("//input[@value='Login']")).click();
   }
 
   private void logout() {
