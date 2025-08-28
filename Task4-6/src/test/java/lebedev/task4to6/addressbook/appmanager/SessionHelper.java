@@ -10,12 +10,12 @@ public class SessionHelper extends BaseHelper {
     }
 
     public void login(String username, String password) {
-        type(By.name("user"),username);
-        type(By.name("pass"), password);
-        click(By.xpath("//input[@value='Login']"));
+        typeIntoField(By.name("user"),username);
+        typeIntoField(By.name("pass"), password);
+        clickOnElement(By.xpath("//input[@value='Login']"));
     }
 
     public void logout() {
-        click(By.linkText("Logout"));
+        clickOnElement(By.linkText("Logout"));
     }
 }

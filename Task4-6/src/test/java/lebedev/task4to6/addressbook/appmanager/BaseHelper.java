@@ -6,23 +6,27 @@ import org.openqa.selenium.WebDriver;
 
 public class BaseHelper {
 
-    protected WebDriver wd;
+    protected WebDriver webDriver;
 
-    public BaseHelper(WebDriver wd) {
-        this.wd = wd;
+    public BaseHelper(WebDriver webDriver) {
+        this.webDriver = webDriver;
     }
 
-    protected void type(By locator, String text) {
-        wd.findElement(locator).sendKeys(text);
+    protected void typeIntoField(By locator, String text) {
+        webDriver.findElement(locator).sendKeys(text);
     }
 
-    protected void click(By locator) {
-        wd.findElement (locator).click();
+    protected void clickOnElement(By locator) {
+        webDriver.findElement (locator).click();
+    }
+
+    protected void clearField (By locator) {
+        webDriver.findElement(locator).clear();
     }
 
     public boolean isAlertPresent(){
         try {
-            wd.switchTo().alert();
+            webDriver.switchTo().alert();
             return true;
         } catch (NoAlertPresentException e) {
             return false;

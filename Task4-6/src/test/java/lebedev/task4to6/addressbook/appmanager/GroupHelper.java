@@ -11,28 +11,43 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void returnToGroupPage() {
-      click(By.linkText("group page"));
+      clickOnElement(By.linkText("group page"));
     }
 
     public void submitGroupCreation() {
-      click(By.name("submit"));
+      clickOnElement(By.name("submit"));
     }
 
-    public void fillGroupCreationForm(GroupData groupData) {
-        type(By.name("group_name"),groupData.name());
-        type(By.name("group_header"),groupData.header());
-        type(By.name("group_footer"),groupData.footer());
+    public void fillGroupForm(GroupData groupData) {
+        typeIntoField(By.name("group_name"),groupData.name());
+        typeIntoField(By.name("group_header"),groupData.header());
+        typeIntoField(By.name("group_footer"),groupData.footer());
     }
 
     public void initGroupCreation() {
-      click(By.name("new"));
+      clickOnElement(By.name("new"));
     }
 
     public void submitGroupDeletion() {
-      click(By.name("delete"));
+      clickOnElement(By.name("delete"));
     }
 
     public void selectGroup() {
-      click(By.name("selected[]"));
+      clickOnElement(By.name("selected[]"));
     }
+
+    public void initGroupEditing() {
+        clickOnElement(By.name("edit"));
+    }
+
+    public void submitGroupEditing() {
+        clickOnElement(By.name("update"));
+    }
+
+    public void clearGroupForm () {
+        clearField(By.name("group_name"));
+        clearField(By.name("group_header"));
+        clearField(By.name("group_footer"));
+    }
+
 }

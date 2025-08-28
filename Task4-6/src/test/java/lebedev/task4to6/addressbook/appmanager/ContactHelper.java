@@ -14,33 +14,50 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void returnToHomePage() {
-        click(By.linkText("home page"));
+        clickOnElement(By.linkText("home page"));
     }
 
     public void submitContactCreation() {
-        click(By.xpath("(//input[@name='submit'])[2]"));
+        clickOnElement(By.xpath("(//input[@name='submit'])[2]"));
     }
 
     public void fillContactForm(ContactData contactData) {
-        type(By.name("firstname"), contactData.firstName());
-        type(By.name("middlename"), contactData.middleName());
-        type(By.name("lastname"), contactData.lastName());
-        type(By.name("nickname"), contactData.nickname());
-        type(By.name("company"), contactData.company());
-        type(By.name("email"), contactData.email());
+        typeIntoField(By.name("firstname"), contactData.firstName());
+        typeIntoField(By.name("middlename"), contactData.middleName());
+        typeIntoField(By.name("lastname"), contactData.lastName());
+        typeIntoField(By.name("nickname"), contactData.nickname());
+        typeIntoField(By.name("company"), contactData.company());
+        typeIntoField(By.name("email"), contactData.email());
     }
 
-    public void submitContactDeletion() {
-        click(By.xpath("(//input[@value='Delete'])"));
+    public void initContactDeletion() {
+        clickOnElement(By.xpath("(//input[@value='Delete'])"));
     }
 
     public void selectContact() {
-        click(By.xpath("//input[@title='Select (TestFirstName TestLastName)']"));
+        clickOnElement(By.xpath("//input[@title='Select (TestFirstName TestLastName)']"));
     }
 
     public void acceptContactDeletion() {
-      Alert contactDeletionAlert = wd.switchTo().alert();
+      Alert contactDeletionAlert = webDriver.switchTo().alert();
       assertEquals("Delete 1 addresses?", contactDeletionAlert.getText());
       contactDeletionAlert.accept();
+    }
+
+    public void initContactEditing () {
+        clickOnElement(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void submitContactEditing () {
+        clickOnElement(By.name("update"));
+    }
+
+    public void clearContactForm () {
+        clearField(By.name("firstname"));
+        clearField(By.name("middlename"));
+        clearField(By.name("lastname"));
+        clearField(By.name("nickname"));
+        clearField(By.name("company"));
+        clearField(By.name("email"));
     }
 }
