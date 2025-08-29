@@ -1,9 +1,11 @@
 package lebedev.task4to6.addressbook.appmanager;
 
 import lebedev.task4to6.addressbook.model.ContactData;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,13 +23,21 @@ public class ContactHelper extends BaseHelper {
         clickOnElement(By.xpath("(//input[@name='submit'])[2]"));
     }
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean creationOrEditingForm) {
         typeIntoField(By.name("firstname"), contactData.firstName());
         typeIntoField(By.name("middlename"), contactData.middleName());
         typeIntoField(By.name("lastname"), contactData.lastName());
         typeIntoField(By.name("nickname"), contactData.nickname());
         typeIntoField(By.name("company"), contactData.company());
         typeIntoField(By.name("email"), contactData.email());
+
+        if (creationOrEditingForm){
+            if (contactData.group() !=null) {
+                new Select(webDriver.findElement(By.name("new_group"))).selectByVisibleText(contactData.group());
+            }
+        } else {
+            Assertions.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
     public void initContactDeletion() {
@@ -35,7 +45,7 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void selectContact() {
-        clickOnElement(By.xpath("//input[@title='Select (TestFirstName TestLastName)']"));
+        clickOnElement(By.name("selected[]"));
     }
 
     public void acceptContactDeletion() {
@@ -45,19 +55,20 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void initContactEditing () {
-        clickOnElement(By.xpath("//img[@alt='Edit']"));
+        clickOnElement(By.xpath("//img[@title='Edit']"));
     }
 
     public void submitContactEditing () {
         clickOnElement(By.name("update"));
     }
 
-    public void clearContactForm () {
-        clearField(By.name("firstname"));
-        clearField(By.name("middlename"));
-        clearField(By.name("lastname"));
-        clearField(By.name("nickname"));
-        clearField(By.name("company"));
-        clearField(By.name("email"));
+    public void createContact(ContactData contactData) {
+        fillContactForm (contactData, true);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    public boolean isContactExist() {
+        return isElementPresent(By.name("selected[]"));
     }
 }

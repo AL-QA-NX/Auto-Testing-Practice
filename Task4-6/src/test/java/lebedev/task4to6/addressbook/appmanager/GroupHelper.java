@@ -44,10 +44,14 @@ public class GroupHelper extends BaseHelper {
         clickOnElement(By.name("update"));
     }
 
-    public void clearGroupForm () {
-        clearField(By.name("group_name"));
-        clearField(By.name("group_header"));
-        clearField(By.name("group_footer"));
+    public void createGroup(GroupData groupData) {
+        initGroupCreation();
+        fillGroupForm(groupData);
+        submitGroupCreation();
+        returnToGroupPage();
     }
 
+    public boolean isGroupExist() {
+        return isElementPresent(By.name("selected[]"));
+    }
 }

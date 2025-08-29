@@ -7,12 +7,17 @@ public class ContactEditingTest extends TestBase {
 
     @Test
     public void contactEditing () {
-        app.getContactHelper().selectContact();
+        if (! app.getContactHelper().isContactExist()){
+            app.getNavigationHelper().goToContactPage();
+            app.getContactHelper().createContact(new ContactData("TestFirstName",
+                "TestMiddleName", "TestLastName", "Test",
+                "TestCompany", "test@mail.com", null));
+        }
         app.getContactHelper().initContactEditing();
-        app.getContactHelper().clearContactForm();
-        app.getContactHelper().fillContactForm(new ContactData("EditFirstName", "EditMiddleName", "EditLastName", "EditTest", "EditCompany", "editTest@mail.com"));
+        app.getContactHelper().fillContactForm(new ContactData("TestFirstName",
+                "TestMiddleName", "TestLastName", "Test",
+                "TestCompany", "test@mail.com", null), false);
         app.getContactHelper().submitContactEditing();
         app.getContactHelper().returnToHomePage();
     }
-
 }

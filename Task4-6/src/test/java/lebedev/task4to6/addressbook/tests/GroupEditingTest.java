@@ -9,9 +9,11 @@ public class GroupEditingTest extends TestBase {
     @Test
     public void groupEditing () {
         app.getNavigationHelper().goToGroupPage();
+        if (!app.getGroupHelper().isGroupExist()){
+            app.getGroupHelper().createGroup (new GroupData("GroupName","GroupHeader", "GroupFooter"));
+        }
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupEditing();
-        app.getGroupHelper().clearGroupForm();
         app.getGroupHelper().fillGroupForm(new GroupData("testName", "testHeader", "testFooter"));
         app.getGroupHelper().submitGroupEditing();
         app.getGroupHelper().returnToGroupPage();

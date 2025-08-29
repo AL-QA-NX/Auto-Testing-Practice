@@ -1,10 +1,14 @@
 package lebedev.task4to6.addressbook.appmanager;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.Browser;
 
 public class ApplicationManager {
 
+    private final Browser selectedBrowser;
     public WebDriver wd;
 
     private SessionHelper sessionHelper;
@@ -12,8 +16,19 @@ public class ApplicationManager {
     private GroupHelper groupHelper;
     private ContactHelper contactHelper;
 
+    public ApplicationManager(Browser selectedBrowser) {
+        this.selectedBrowser = selectedBrowser;
+    }
+
     public void initialize() {
-        wd = new FirefoxDriver();
+        if (selectedBrowser.equals(Browser.FIREFOX)) {
+            wd = new FirefoxDriver();
+        } else if (selectedBrowser.equals(Browser.CHROME)) {
+            wd = new ChromeDriver();
+        } else if (selectedBrowser.equals(Browser.EDGE)) {
+            wd = new EdgeDriver();
+        }
+
         sessionHelper = new SessionHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         groupHelper = new GroupHelper(wd);
