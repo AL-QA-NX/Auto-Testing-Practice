@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GroupHelper extends BaseHelper {
 
@@ -64,14 +65,14 @@ public class GroupHelper extends BaseHelper {
     }
 
     public List<GroupData> getGroupList() {
-        List<GroupData> groups = new ArrayList<GroupData>();
-        List<WebElement> elements = webDriver.findElements(By.cssSelector("span.group"));
-        for (WebElement element: elements){
+        List<GroupData> groupsGetGroupList = new ArrayList <>();
+        List<WebElement> elementsGroups = webDriver.findElements(By.cssSelector("span.group"));
+        for (WebElement element: elementsGroups){
             String name = element.getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            int id = Integer.parseInt(Objects.requireNonNull(element.findElement(By.tagName("input")).getAttribute("value")));
             GroupData group = new GroupData(id, name, null, null);
-            groups.add(group);
+            groupsGetGroupList.add(group);
         }
-        return groups;
+        return groupsGetGroupList;
     }
 }

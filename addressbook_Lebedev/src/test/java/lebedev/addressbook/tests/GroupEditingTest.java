@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupEditingTest extends TestBase {
@@ -30,7 +29,7 @@ public class GroupEditingTest extends TestBase {
 
         beforeGroupList.remove(beforeGroupList.size() - 1);
         beforeGroupList.add(group);
-        Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.id(), g2.id());
+        Comparator<? super GroupData> byId = Comparator.comparingInt(GroupData::id);
         beforeGroupList.sort(byId);
         afterGroupList.sort(byId);
         Assertions.assertEquals(beforeGroupList, afterGroupList);

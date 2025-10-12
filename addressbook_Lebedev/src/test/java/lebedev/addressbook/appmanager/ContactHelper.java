@@ -5,11 +5,27 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContactHelper extends BaseHelper {
+
+    public List<ContactData> getContactList (){
+        List<ContactData> contactsGetContactList = new ArrayList <>();
+        List<WebElement> elementsContacts = webDriver.findElements(By.cssSelector("tr[name='entry']"));
+        for (WebElement element: elementsContacts ) {
+            String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
+            String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
+            ContactData contacts = new ContactData(firstName, null, lastName, null, null, null, null);
+            contactsGetContactList.add (contacts);
+        }
+        return contactsGetContactList;
+    };
 
     public ContactHelper(WebDriver wd) {
         super(wd);
@@ -44,8 +60,8 @@ public class ContactHelper extends BaseHelper {
         clickOnElement(By.xpath("(//input[@value='Delete'])"));
     }
 
-    public void selectContact() {
-        clickOnElement(By.name("selected[]"));
+    public void selectContact(int index) {
+        webDriver.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void acceptContactDeletion() {
@@ -54,8 +70,9 @@ public class ContactHelper extends BaseHelper {
       contactDeletionAlert.accept();
     }
 
-    public void initContactEditing () {
-        clickOnElement(By.xpath("//img[@title='Edit']"));
+    public void initContactEditing (int index) {
+        webDriver.findElements(By.xpath("//img[@title='Edit']")).get(index).click();
+        //clickOnElement(By.xpath("//img[@title='Edit']"));
     }
 
     public void submitContactEditing () {

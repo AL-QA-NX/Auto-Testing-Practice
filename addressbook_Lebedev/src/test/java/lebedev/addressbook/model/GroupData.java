@@ -6,10 +6,6 @@ import static java.lang.Integer.MAX_VALUE;
 
 public record GroupData(int id, String name, String header, String footer) {
 
-    public GroupData(String name, String header, String footer) {
-        this(MAX_VALUE, name, header, footer);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -23,12 +19,8 @@ public record GroupData(int id, String name, String header, String footer) {
         return Objects.hashCode(name);
     }
 
-    @Override
-    public String toString() {
-        return "GroupData{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public GroupData(String name, String header, String footer) {
+        this(MAX_VALUE, name, header, footer);
     }
 }
 
