@@ -5,9 +5,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class GroupHelper extends BaseHelper {
 
@@ -24,9 +25,9 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void fillGroupForm(GroupData groupData) {
-        typeIntoField(By.name("group_name"),groupData.name());
-        typeIntoField(By.name("group_header"),groupData.header());
-        typeIntoField(By.name("group_footer"),groupData.footer());
+        typeIntoField(By.name("group_name"),groupData.getName());
+        typeIntoField(By.name("group_header"),groupData.getHeader());
+        typeIntoField(By.name("group_footer"),groupData.getFooter());
     }
 
     public void initGroupCreation() {
@@ -37,8 +38,8 @@ public class GroupHelper extends BaseHelper {
       clickOnElement(By.name("delete"));
     }
 
-    public void selectGroup(int index) {
-        webDriver.findElements(By.name("selected[]")).get(index).click();
+    public void selectGroupById(int id) {
+        webDriver.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
     public void initGroupEditing() {
@@ -49,10 +50,24 @@ public class GroupHelper extends BaseHelper {
         clickOnElement(By.name("update"));
     }
 
-    public void createGroup(GroupData groupData) {
+    public void create(GroupData groupData) {
         initGroupCreation();
         fillGroupForm(groupData);
         submitGroupCreation();
+        returnToGroupPage();
+    }
+
+    public void edit(GroupData group) {
+        selectGroupById(group.getId());
+        initGroupEditing();
+        fillGroupForm(group);
+        submitGroupEditing();
+        returnToGroupPage();
+    }
+
+    public void delete(GroupData group) {
+        selectGroupById(group.getId());
+        submitGroupDeletion();
         returnToGroupPage();
     }
 
@@ -64,14 +79,13 @@ public class GroupHelper extends BaseHelper {
         return webDriver.findElements(By.name("selected[]")).size();
     }
 
-    public List<GroupData> getGroupList() {
-        List<GroupData> groupsGetGroupList = new ArrayList <>();
+    public Set<GroupData> all() {
+        Set<GroupData> groupsGetGroupList = new HashSet<>();
         List<WebElement> elementsGroups = webDriver.findElements(By.cssSelector("span.group"));
         for (WebElement element: elementsGroups){
             String name = element.getText();
             int id = Integer.parseInt(Objects.requireNonNull(element.findElement(By.tagName("input")).getAttribute("value")));
-            GroupData group = new GroupData(id, name, null, null);
-            groupsGetGroupList.add(group);
+            groupsGetGroupList.add(new GroupData().withId(id).withName(name));
         }
         return groupsGetGroupList;
     }

@@ -15,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContactHelper extends BaseHelper {
 
-    public List<ContactData> getContactList (){
+    public List<ContactData> list(){
         List<ContactData> contactsGetContactList = new ArrayList <>();
         List<WebElement> elementsContacts = webDriver.findElements(By.cssSelector("tr[name='entry']"));
         for (WebElement element: elementsContacts ) {
             String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
             String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
-            ContactData contacts = new ContactData(firstName, null, lastName, null, null, null, null);
+            ContactData contacts = new ContactData().withFirstName(firstName).withLastName(lastName);
             contactsGetContactList.add (contacts);
         }
         return contactsGetContactList;
@@ -40,16 +40,16 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void fillContactForm(ContactData contactData, boolean creationOrEditingForm) {
-        typeIntoField(By.name("firstname"), contactData.firstName());
-        typeIntoField(By.name("middlename"), contactData.middleName());
-        typeIntoField(By.name("lastname"), contactData.lastName());
-        typeIntoField(By.name("nickname"), contactData.nickname());
-        typeIntoField(By.name("company"), contactData.company());
-        typeIntoField(By.name("email"), contactData.email());
+        typeIntoField(By.name("firstname"), contactData.getFirstName());
+        typeIntoField(By.name("middlename"), contactData.getMiddleName());
+        typeIntoField(By.name("lastname"), contactData.getLastName());
+        typeIntoField(By.name("nickname"), contactData.getNickname());
+        typeIntoField(By.name("company"), contactData.getCompany());
+        typeIntoField(By.name("email"), contactData.getEmail());
 
         if (creationOrEditingForm){
-            if (contactData.group() !=null) {
-                new Select(webDriver.findElement(By.name("new_group"))).selectByVisibleText(contactData.group());
+            if (contactData.getGroup() !=null) {
+                new Select(webDriver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
             }
         } else {
             Assertions.assertFalse(isElementPresent(By.name("new_group")));
@@ -72,17 +72,27 @@ public class ContactHelper extends BaseHelper {
 
     public void initContactEditing (int index) {
         webDriver.findElements(By.xpath("//img[@title='Edit']")).get(index).click();
-        //clickOnElement(By.xpath("//img[@title='Edit']"));
     }
 
     public void submitContactEditing () {
         clickOnElement(By.name("update"));
     }
 
-    public void createContact(ContactData contactData) {
+    public void create(ContactData contactData) {
         fillContactForm (contactData, true);
         submitContactCreation();
-        returnToHomePage();
+    }
+
+    public void delete(int index) {
+        selectContact(index);
+        initContactDeletion();
+        acceptContactDeletion();
+    }
+
+    public void edit(int index, ContactData contactDataForEditing) {
+        initContactEditing(index);
+        fillContactForm(contactDataForEditing, false);
+        submitContactEditing();
     }
 
     public boolean isContactExist() {

@@ -2,33 +2,38 @@ package lebedev.addressbook.tests;
 
 import lebedev.addressbook.model.ContactData;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.List;
 
 public class ContactDeletionTest extends TestBase {
 
+  @BeforeMethod
+  public static void contactDeletionPreconditionsCheck() {
+    appManager.goTo().homePage();
+    if (appManager.contact().list().isEmpty()){
+      appManager.goTo().contactPage();
+      appManager.contact().create(new ContactData()
+                      .withFirstName("TestFirstName").withMiddleName("TestMiddleName")
+                      .withLastName("TestLastName").withNickname("Test")
+                      .withCompany("TestCompany").withEmail("test@mail.com"));
+    }
+  }
+
   @Test
   public void contactDeletion() {
-    if (! appManager.getContactHelper().isContactExist()){
-      appManager.getNavigationHelper().goToContactPage();
-      appManager.getContactHelper().createContact(new ContactData("TestFirstName",
-              "TestMiddleName", "TestLastName", "Test",
-              "TestCompany", "test@mail.com", null));
-    }
-    List<ContactData> beforeContactList = appManager.getContactHelper().getContactList();
-    appManager.getContactHelper().selectContact(beforeContactList.size() - 1);
-    appManager.getContactHelper().initContactDeletion();
-    appManager.getContactHelper().acceptContactDeletion();
-    WebDriverWait wait = new WebDriverWait(appManager.webDriver, Duration.ofSeconds(4));
-    wait.until(ExpectedConditions.urlToBe("http://localhost/addressbook/"));
-    List<ContactData> afterContactList = appManager.getContactHelper().getContactList();
+    List<ContactData> beforeContactList = appManager.contact().list();
+    int index = beforeContactList.size() - 1;
+
+    appManager.contact().delete(index);
+    appManager.goTo().homePage();
+
+    List<ContactData> afterContactList = appManager.contact().list();
     Assertions.assertEquals(afterContactList.size(), beforeContactList.size() - 1);
 
-    beforeContactList.remove(beforeContactList.size() - 1);
+    beforeContactList.remove(index);
     Assertions.assertEquals(beforeContactList, afterContactList);
   }
+
 }

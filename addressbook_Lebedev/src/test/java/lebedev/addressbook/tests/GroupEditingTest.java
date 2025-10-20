@@ -3,35 +3,37 @@ package lebedev.addressbook.tests;
 
 import lebedev.addressbook.model.GroupData;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class GroupEditingTest extends TestBase {
 
+    @BeforeMethod
+    public void groupEditingPreconditionsCheck() {
+        appManager.goTo().groupPage();
+        if (appManager.group().all().isEmpty()){
+            appManager.group().create(new GroupData().withName("GroupName").withHeader("GroupHeader").withFooter("GroupFooter"));
+        }
+    }
+
     @Test
     public void groupEditing () {
-        appManager.getNavigationHelper().goToGroupPage();
-        if (!appManager.getGroupHelper().isGroupExist()){
-            appManager.getGroupHelper().createGroup (new GroupData("GroupName","GroupHeader", "GroupFooter"));
-        }
-        List<GroupData> beforeGroupList = appManager.getGroupHelper().getGroupList();
-        appManager.getGroupHelper().selectGroup(beforeGroupList.size() - 1);
-        appManager.getGroupHelper().initGroupEditing();
-        GroupData group = new GroupData(beforeGroupList.get(beforeGroupList.size() - 1).id(),"testName", "testHeader", "testFooter");
-        appManager.getGroupHelper().fillGroupForm(group);
-        appManager.getGroupHelper().submitGroupEditing();
-        appManager.getGroupHelper().returnToGroupPage();
-        List<GroupData> afterGroupList = appManager.getGroupHelper().getGroupList();
-        Assertions.assertEquals(afterGroupList.size(), beforeGroupList.size());
-        appManager.getNavigationHelper().goToHomePage();
+        Set<GroupData> beforeGroupList = appManager.group().all();
+        GroupData editedGroup = beforeGroupList.iterator().next();
+        GroupData group = new GroupData()
+                .withId(editedGroup.getId()).withName("testName").withHeader("testHeader").withFooter("testFooter");
 
-        beforeGroupList.remove(beforeGroupList.size() - 1);
+        appManager.group().edit(group);
+
+        Set<GroupData> afterGroupList = appManager.group().all();
+        Assertions.assertEquals(afterGroupList.size(), beforeGroupList.size());
+
+        appManager.goTo().homePage();
+
+        beforeGroupList.remove(editedGroup);
         beforeGroupList.add(group);
-        Comparator<? super GroupData> byId = Comparator.comparingInt(GroupData::id);
-        beforeGroupList.sort(byId);
-        afterGroupList.sort(byId);
         Assertions.assertEquals(beforeGroupList, afterGroupList);
     }
 }

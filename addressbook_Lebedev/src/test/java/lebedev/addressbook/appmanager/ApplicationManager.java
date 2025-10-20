@@ -1,6 +1,5 @@
 package lebedev.addressbook.appmanager;
 
-import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -13,11 +12,11 @@ public class ApplicationManager {
     public WebDriver webDriver;
 
     private SessionHelper sessionHelper;
-    @Getter
+
     private NavigationHelper navigationHelper;
-    @Getter
+
     private GroupHelper groupHelper;
-    @Getter
+
     private ContactHelper contactHelper;
 
     public ApplicationManager(Browser selectedBrowser) {
@@ -44,5 +43,17 @@ public class ApplicationManager {
     public void stop() {
         sessionHelper.logout();
         webDriver.quit();
+    }
+
+    public NavigationHelper goTo() {
+        return navigationHelper;
+    }
+
+    public GroupHelper group() {
+        return groupHelper;
+    }
+
+    public ContactHelper contact() {
+        return contactHelper;
     }
 }

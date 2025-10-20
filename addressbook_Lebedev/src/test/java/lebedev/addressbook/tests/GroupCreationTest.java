@@ -2,31 +2,33 @@ package lebedev.addressbook.tests;
 
 import lebedev.addressbook.model.GroupData;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class GroupCreationTest extends TestBase {
+
+  @BeforeMethod
+  public void groupCreationPreconditionsCheck() {
+    appManager.goTo().groupPage();
+  }
+
   @Test
   public void groupCreation() {
-    appManager.getNavigationHelper().goToGroupPage();
-    List<GroupData> beforeGroupList = appManager.getGroupHelper().getGroupList();
-    GroupData groupForList = new GroupData(
-            "GroupName",
-            "GroupHeader",
-            "GroupFooter"
-    );
-    appManager.getGroupHelper().createGroup(groupForList);
-    List<GroupData> afterGroupList = appManager.getGroupHelper().getGroupList();
-    Assertions.assertEquals(afterGroupList.size(), beforeGroupList.size() + 1);
-    appManager.getNavigationHelper().goToHomePage();
+    Set<GroupData> beforeGroupList = appManager.group().all();
+    GroupData groupForList = new GroupData().withName("GroupName").withHeader("GroupHeader").withFooter("GroupFooter");
 
-      beforeGroupList.add(groupForList);
-      Comparator<? super GroupData> byId = Comparator.comparingInt(GroupData::id);
-      beforeGroupList.sort(byId);
-      afterGroupList.sort(byId);
-      Assertions.assertEquals(beforeGroupList, afterGroupList);
+    appManager.group().create(groupForList);
+
+    Set<GroupData> afterGroupList = appManager.group().all();
+    Assertions.assertEquals(afterGroupList.size(), beforeGroupList.size() + 1);
+
+    appManager.goTo().homePage();
+
+    groupForList.withId(afterGroupList.stream().mapToInt((g) -> g.getId()).max().getAsInt());
+    beforeGroupList.add(groupForList);
+    Assertions.assertEquals(beforeGroupList, afterGroupList);
   }
 }
 

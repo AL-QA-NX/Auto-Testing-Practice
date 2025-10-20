@@ -2,27 +2,34 @@ package lebedev.addressbook.tests;
 
 import lebedev.addressbook.model.GroupData;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import java.util.List;
+import java.util.Set;
 
 public class GroupDeletionTest extends TestBase {
 
+  @BeforeMethod
+  public void groupDeletionPreconditionsCheck() {
+    appManager.goTo().groupPage();
+    if (appManager.group().all().isEmpty()){
+      appManager.group().create(new GroupData().withName("GroupName").withHeader("GroupHeader").withFooter("GroupFooter"));
+    }
+  }
+
   @Test
   public void groupDeletion() {
-    appManager.getNavigationHelper().goToGroupPage();
-    if (!appManager.getGroupHelper().isGroupExist()){
-      appManager.getGroupHelper().createGroup (new GroupData("GroupName","GroupHeader", "GroupFooter"));
-    }
-    List<GroupData> beforeGroupList = appManager.getGroupHelper().getGroupList();
-    appManager.getGroupHelper().selectGroup(beforeGroupList.size() - 1);
-    appManager.getGroupHelper().submitGroupDeletion();
-    appManager.getGroupHelper().returnToGroupPage();
-    List<GroupData> afterGroupList = appManager.getGroupHelper().getGroupList();
-    Assertions.assertEquals(afterGroupList.size(), beforeGroupList.size() - 1);
-    appManager.getNavigationHelper().goToHomePage();
+    Set<GroupData> beforeGroupList = appManager.group().all();
+    GroupData deletedGroup = beforeGroupList.iterator().next();
 
-    beforeGroupList.remove(beforeGroupList.size() - 1);
+    appManager.group().delete(deletedGroup);
+
+    Set<GroupData> afterGroupList = appManager.group().all();
+    Assertions.assertEquals(afterGroupList.size(), beforeGroupList.size() - 1);
+
+    appManager.goTo().homePage();
+
+    beforeGroupList.remove(deletedGroup);
     Assertions.assertEquals(beforeGroupList, afterGroupList);
   }
 }

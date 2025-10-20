@@ -1,20 +1,20 @@
 package lebedev.addressbook.tests;
 
 import lebedev.addressbook.appmanager.ApplicationManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.Browser;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
 public class TestBase {
 
-    protected final ApplicationManager appManager = new ApplicationManager(Browser.CHROME);
+    protected static final ApplicationManager appManager = new ApplicationManager(Browser.CHROME);
 
-    @BeforeEach
+    @BeforeSuite
     public void setUp() {
         appManager.initialize();
     }
 
-    @AfterEach
+    @AfterSuite
     public void tearDown() {
         appManager.stop();
     }
