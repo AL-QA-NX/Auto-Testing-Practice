@@ -1,6 +1,7 @@
 package lebedev.addressbook.appmanager;
 
 import lebedev.addressbook.model.GroupData;
+import lebedev.addressbook.model.Groups;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -79,8 +80,8 @@ public class GroupHelper extends BaseHelper {
         return webDriver.findElements(By.name("selected[]")).size();
     }
 
-    public Set<GroupData> all() {
-        Set<GroupData> groupsGetGroupList = new HashSet<>();
+    public Groups all() {
+        Groups groupsGetGroupList = new Groups();
         List<WebElement> elementsGroups = webDriver.findElements(By.cssSelector("span.group"));
         for (WebElement element: elementsGroups){
             String name = element.getText();

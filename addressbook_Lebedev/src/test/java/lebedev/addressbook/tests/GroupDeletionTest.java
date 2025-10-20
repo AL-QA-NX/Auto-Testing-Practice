@@ -1,11 +1,12 @@
 package lebedev.addressbook.tests;
 
 import lebedev.addressbook.model.GroupData;
-import org.junit.jupiter.api.Assertions;
+import lebedev.addressbook.model.Groups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupDeletionTest extends TestBase {
 
@@ -19,17 +20,17 @@ public class GroupDeletionTest extends TestBase {
 
   @Test
   public void groupDeletion() {
-    Set<GroupData> beforeGroupList = appManager.group().all();
+    Groups beforeGroupList = appManager.group().all();
     GroupData deletedGroup = beforeGroupList.iterator().next();
 
     appManager.group().delete(deletedGroup);
 
-    Set<GroupData> afterGroupList = appManager.group().all();
-    Assertions.assertEquals(afterGroupList.size(), beforeGroupList.size() - 1);
+    Groups afterGroupList = appManager.group().all();
+
+    assertThat(afterGroupList.size(),equalTo(beforeGroupList.size() - 1));
 
     appManager.goTo().homePage();
 
-    beforeGroupList.remove(deletedGroup);
-    Assertions.assertEquals(beforeGroupList, afterGroupList);
+    assertThat(afterGroupList, equalTo(beforeGroupList.without(deletedGroup)));
   }
 }

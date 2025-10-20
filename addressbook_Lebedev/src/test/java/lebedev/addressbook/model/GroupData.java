@@ -10,7 +10,7 @@ public class GroupData {
     private String header;
     private String footer;
 
-    public int getId() {return id;};
+    public int getId() {return id;}
     public String getName() {return name;}
     public String getHeader() {return header;}
     public String getFooter() {return footer;}

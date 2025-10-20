@@ -1,11 +1,12 @@
 package lebedev.addressbook.tests;
 
 import lebedev.addressbook.model.GroupData;
-import org.junit.jupiter.api.Assertions;
+import lebedev.addressbook.model.Groups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTest extends TestBase {
 
@@ -16,19 +17,17 @@ public class GroupCreationTest extends TestBase {
 
   @Test
   public void groupCreation() {
-    Set<GroupData> beforeGroupList = appManager.group().all();
+    Groups beforeGroupList = appManager.group().all();
     GroupData groupForList = new GroupData().withName("GroupName").withHeader("GroupHeader").withFooter("GroupFooter");
 
     appManager.group().create(groupForList);
 
-    Set<GroupData> afterGroupList = appManager.group().all();
-    Assertions.assertEquals(afterGroupList.size(), beforeGroupList.size() + 1);
-
+    Groups afterGroupList = appManager.group().all();
+    assertThat(afterGroupList.size(), equalTo(beforeGroupList.size() + 1));
     appManager.goTo().homePage();
 
-    groupForList.withId(afterGroupList.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-    beforeGroupList.add(groupForList);
-    Assertions.assertEquals(beforeGroupList, afterGroupList);
+    assertThat(afterGroupList, equalTo(
+            groupForList.withId(afterGroupList.stream().mapToInt(GroupData::getId).max().getAsInt())));
   }
 }
 

@@ -16,16 +16,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Версии -->
-        <junit.jupiter.version>5.9.3</junit.jupiter.version>
+        <junit.jupiter.version>6.0.0</junit.jupiter.version>
         <testng.version>7.11.0</testng.version>
-        <allure.version>2.29.1</allure.version>
-        <restassured.version>5.5.5</restassured.version>
-        <junit-platform-launcher.version>1.9.3</junit-platform-launcher.version>
-        <slf4j-simple.version>2.0.12</slf4j-simple.version>
+        <allure.version>2.30.0</allure.version>
+        <restassured.version>5.5.6</restassured.version>
+        <junit-platform-launcher.version>6.0.0</junit-platform-launcher.version>
+        <slf4j-simple.version>2.0.17</slf4j-simple.version>
         <aspectj.version>1.9.24</aspectj.version>
         <selenium.verion>4.35.0</selenium.verion>
         <maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>
         <allure.maven.plugin.version>2.12.0</allure.maven.plugin.version>
+        <lombok.version>1.18.42</lombok.version>
+        <java-hamcrest.version>2.0.0.0</java-hamcrest.version>
     </properties>
 
     <dependencyManagement>
@@ -114,9 +116,17 @@
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
-            <artifactId>lombok-maven-plugin</artifactId>
-            <version>1.18.20.0</version>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Java-Hamcrest -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>java-hamcrest</artifactId>
+            <version>${java-hamcrest.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
