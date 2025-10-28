@@ -1,12 +1,12 @@
 package lebedev.addressbook.tests;
 
 import lebedev.addressbook.model.ContactData;
-import org.junit.jupiter.api.Assertions;
+import lebedev.addressbook.model.Contacts;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTest extends TestBase {
 
@@ -17,25 +17,21 @@ public class ContactCreationTest extends TestBase {
 
     @Test
     public void contactCreation() {
-        List<ContactData> beforeContactList = appManager.contact().list();
+        Contacts beforeContactList = appManager.contact().all();
+        ContactData contactThatWillBeCreated = new ContactData()
+                .withFirstName("TestFirstName").withMiddleName("TestMiddleName")
+                .withLastName("TestLastName").withNickname("TestNickname")
+                .withCompany("TestCompany").withAddress("TestAddress")
+                .withFirstEmail("TestEmail").withSecondEmail("TestEmailSecond").withThirdEmail("TestEmailThird")
+                .withGroup("GroupName").withHomePhone("123456").withMobilePhone("+79854612312").withWorkPhone("123456789");
 
         appManager.goTo().contactPage();
+        appManager.contact().create(contactThatWillBeCreated);
 
-        ContactData contactData = new ContactData().withFirstName("TestFirstName").withMiddleName("TestMiddleName")
-                .withLastName("TestLastName").withNickname("TestNickname")
-                .withCompany("TestCompany").withEmail("TestEmail").withGroup("GroupName");
+        assertThat(appManager.contact().count(), equalTo(beforeContactList.size() + 1));
+        Contacts afterContactList = appManager.contact().all();
 
-        appManager.contact().create(contactData);
-        appManager.goTo().homePage();
-
-        List<ContactData> afterContactList = appManager.contact().list();
-        Assertions.assertEquals(afterContactList.size(), beforeContactList.size() + 1);
-
-        beforeContactList.add(contactData);
-        Comparator<? super ContactData> byLastAndFirstName = Comparator.comparing(ContactData::getLastName).
-                thenComparing(ContactData::getFirstName);
-        beforeContactList.sort(byLastAndFirstName);
-        afterContactList.sort(byLastAndFirstName);
-        Assertions.assertEquals(beforeContactList, afterContactList);
+        assertThat(afterContactList, equalTo(beforeContactList.withAdded(contactThatWillBeCreated.withId(afterContactList.stream()
+                .mapToInt(ContactData::getId).max().getAsInt()))));
     }
 }

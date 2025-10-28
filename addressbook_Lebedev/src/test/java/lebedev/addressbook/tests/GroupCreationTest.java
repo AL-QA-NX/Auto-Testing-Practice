@@ -18,16 +18,28 @@ public class GroupCreationTest extends TestBase {
   @Test
   public void groupCreation() {
     Groups beforeGroupList = appManager.group().all();
-    GroupData groupForList = new GroupData().withName("GroupName").withHeader("GroupHeader").withFooter("GroupFooter");
+    GroupData groupThatWillBeCreated = new GroupData().withName("GroupName").withHeader("GroupHeader").withFooter("GroupFooter");
 
-    appManager.group().create(groupForList);
+    appManager.group().create(groupThatWillBeCreated);
 
+    assertThat(appManager.group().count(), equalTo(beforeGroupList.size() + 1));
     Groups afterGroupList = appManager.group().all();
-    assertThat(afterGroupList.size(), equalTo(beforeGroupList.size() + 1));
     appManager.goTo().homePage();
 
-    assertThat(afterGroupList, equalTo(
-            groupForList.withId(afterGroupList.stream().mapToInt(GroupData::getId).max().getAsInt())));
+    assertThat(afterGroupList, equalTo(beforeGroupList.withAdded(groupThatWillBeCreated.withId(afterGroupList.stream()
+            .mapToInt(GroupData::getId).max().getAsInt()))));
+  }
+
+  @Test
+  public void badGroupCreation() {
+    Groups beforeGroupList = appManager.group().all();
+    GroupData groupForList = new GroupData().withName("GroupName'").withHeader("GroupHeader").withFooter("GroupFooter");
+
+    appManager.group().create(groupForList);
+    assertThat(appManager.group().count(), equalTo(beforeGroupList.size()));
+    Groups afterGroupList = appManager.group().all();
+    appManager.goTo().homePage();
+    assertThat(afterGroupList, equalTo(beforeGroupList));
   }
 }
 

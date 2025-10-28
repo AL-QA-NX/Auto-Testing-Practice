@@ -1,15 +1,12 @@
 package lebedev.addressbook.tests;
 
-
 import lebedev.addressbook.model.GroupData;
 import lebedev.addressbook.model.Groups;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.Assertions;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupEditingTest extends TestBase {
 
@@ -29,15 +26,9 @@ public class GroupEditingTest extends TestBase {
                 .withId(editedGroup.getId()).withName("testName").withHeader("testHeader").withFooter("testFooter");
 
         appManager.group().edit(group);
-
+        assertThat(appManager.group().count(), equalTo(beforeGroupList.size()));
         Groups afterGroupList = appManager.group().all();
-        Assertions.assertEquals(afterGroupList.size(), beforeGroupList.size());
-
         appManager.goTo().homePage();
-
-        beforeGroupList.remove(editedGroup);
-        beforeGroupList.add(group);
-        Assertions.assertEquals(beforeGroupList, afterGroupList);
-        MatcherAssert.assertThat(afterGroupList, CoreMatchers.equalTo(beforeGroupList.without(editedGroup).withAdded(group)));
+        assertThat(afterGroupList, equalTo(beforeGroupList.without(editedGroup).withAdded(group)));
     }
 }

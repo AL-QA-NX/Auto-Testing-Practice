@@ -1,6 +1,7 @@
 package lebedev.addressbook.appmanager;
 
 import lebedev.addressbook.model.ContactData;
+import lebedev.addressbook.model.Contacts;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -8,24 +9,40 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContactHelper extends BaseHelper {
 
-    public List<ContactData> list(){
-        List<ContactData> contactsGetContactList = new ArrayList <>();
-        List<WebElement> elementsContacts = webDriver.findElements(By.cssSelector("tr[name='entry']"));
-        for (WebElement element: elementsContacts ) {
-            String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
-            String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
-            ContactData contacts = new ContactData().withFirstName(firstName).withLastName(lastName);
-            contactsGetContactList.add (contacts);
+    private Contacts contactsCache = null;
+
+    public Contacts all(){
+        if (contactsCache != null){
+            return new Contacts(contactsCache);
         }
-        return contactsGetContactList;
-    };
+
+        contactsCache = new Contacts();
+        List<WebElement> rows = webDriver.findElements(By.name("entry"));
+        for (WebElement row: rows ) {
+            List<WebElement> cells = row.findElements(By.tagName("td"));
+            int id = Integer.parseInt(Objects.requireNonNull(cells.get(0).findElement(By.tagName("input")).getAttribute("value")));
+            String lastName = cells.get(1).getText();
+            String firstName = cells.get(2).getText();
+            String address = cells.get(3).getText();
+            String allEmails = cells.get(4).getText();
+            String allPhones = cells.get(5).getText();
+            contactsCache.add(new ContactData().withId(id).withFirstName(firstName)
+                    .withLastName(lastName).withAddress(address)
+                    .withAllEmails(allEmails).withAllPhones(allPhones));
+        }
+        return new Contacts(contactsCache);
+    }
+
+    public int count() {
+        return webDriver.findElements(By.name("selected[]")).size();
+    }
 
     public ContactHelper(WebDriver wd) {
         super(wd);
@@ -45,7 +62,13 @@ public class ContactHelper extends BaseHelper {
         typeIntoField(By.name("lastname"), contactData.getLastName());
         typeIntoField(By.name("nickname"), contactData.getNickname());
         typeIntoField(By.name("company"), contactData.getCompany());
-        typeIntoField(By.name("email"), contactData.getEmail());
+        typeIntoField(By.name("address"),contactData.getAddress());
+        typeIntoField(By.name("email"), contactData.getFirstEmail());
+        typeIntoField(By.name("email2"), contactData.getSecondEmail());
+        typeIntoField(By.name("email3"), contactData.getThirdEmail());
+        typeIntoField(By.name("home"), contactData.getHomePhone());
+        typeIntoField(By.name("mobile"), contactData.getMobilePhone());
+        typeIntoField(By.name("work"), contactData.getWorkPhone());
 
         if (creationOrEditingForm){
             if (contactData.getGroup() !=null) {
@@ -60,8 +83,32 @@ public class ContactHelper extends BaseHelper {
         clickOnElement(By.xpath("(//input[@value='Delete'])"));
     }
 
-    public void selectContact(int index) {
-        webDriver.findElements(By.name("selected[]")).get(index).click();
+    public void selectContactById (int id){
+        webDriver.findElement(By.cssSelector(String.format("input[value='%s']",id))).click();
+    }
+
+    public void initContactEditingById (int id){
+        webDriver.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']",id))).click();
+    }
+
+    public ContactData infoFromEditForm (ContactData contactList){
+        initContactEditingById(contactList.getId());
+        String firstname = webDriver.findElement(By.name("firstname")).getAttribute("value");
+        String lastname = webDriver.findElement(By.name("lastname")).getAttribute("value");
+        //String middlename = webDriver.findElement(By.name("middlename")).getAttribute("value");
+        //String nickname = webDriver.findElement(By.name("nickname")).getAttribute("value");
+       // String company = webDriver.findElement(By.name("company")).getAttribute("value");
+        String address = webDriver.findElement(By.name("address")).getText();
+        String firstEmail = webDriver.findElement(By.name("email")).getAttribute("value");
+        String secondEmail = webDriver.findElement(By.name("email2")).getAttribute("value");
+        String thirdEmail = webDriver.findElement(By.name("email3")).getAttribute("value");
+        String home = webDriver.findElement(By.name("home")).getAttribute("value");
+        String mobile = webDriver.findElement(By.name("mobile")).getAttribute("value");
+        String work = webDriver.findElement(By.name("work")).getAttribute("value");
+        webDriver.navigate().back();
+        return new ContactData().withId(contactList.getId()).withFirstName(firstname).withLastName(lastname)
+                .withAddress(address).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work)
+                .withFirstEmail(firstEmail).withSecondEmail(secondEmail).withThirdEmail(thirdEmail);
     }
 
     public void acceptContactDeletion() {
@@ -70,29 +117,30 @@ public class ContactHelper extends BaseHelper {
       contactDeletionAlert.accept();
     }
 
-    public void initContactEditing (int index) {
-        webDriver.findElements(By.xpath("//img[@title='Edit']")).get(index).click();
-    }
-
     public void submitContactEditing () {
         clickOnElement(By.name("update"));
     }
 
-    public void create(ContactData contactData) {
-        fillContactForm (contactData, true);
+    public void create(ContactData contact) {
+        fillContactForm (contact, true);
         submitContactCreation();
+        contactsCache = null;
+        returnToHomePage();
     }
 
-    public void delete(int index) {
-        selectContact(index);
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         initContactDeletion();
         acceptContactDeletion();
+        contactsCache = null;
     }
 
-    public void edit(int index, ContactData contactDataForEditing) {
-        initContactEditing(index);
+    public void edit(ContactData contactDataForEditing) {
+        initContactEditingById (contactDataForEditing.getId());
         fillContactForm(contactDataForEditing, false);
         submitContactEditing();
+        contactsCache = null;
+        returnToHomePage();
     }
 
     public boolean isContactExist() {
