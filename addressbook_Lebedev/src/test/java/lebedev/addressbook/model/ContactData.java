@@ -1,32 +1,60 @@
 package lebedev.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import java.util.Objects;
 
+@XStreamAlias("contact")
 public class ContactData {
 
     private int id;
+
+    @Expose
     private String firstName;
+
+    @Expose
     private String middleName;
+
+    @Expose
     private String lastName;
+
+    @Expose
     private String nickname;
+
+    @Expose
     private String company;
+
+    @Expose
     private String address;
+
+    @Expose
     private String allEmail;
 
-    public String getAllEmail() {
-        return allEmail;
-    }
-
-
-
+    @Expose
     private String firstEmail;
+
+    @Expose
     private String secondEmail;
+
+    @Expose
     private String thirdEmail;
+
+    @Expose
     private String group;
+
+    @Expose
     private String allPhones;
+
+    @Expose
     private String homePhone;
+
+    @Expose
     private String mobilePhone;
+
+    @Expose
     private String workPhone;
+
 
     public int getId() {return id;}
     public String getFirstName() {return firstName;}
@@ -35,6 +63,7 @@ public class ContactData {
     public String getNickname() {return nickname;}
     public String getCompany() {return company;}
     public String getAddress() {return address;}
+    public String getAllEmail() {return allEmail;}
     public String getFirstEmail() {return firstEmail;}
     public String getSecondEmail() {return secondEmail;}
     public String getThirdEmail() {return thirdEmail;}
@@ -138,5 +167,27 @@ public class ContactData {
         result = 31 * result + Objects.hashCode(firstName);
         result = 31 * result + Objects.hashCode(lastName);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", company='" + company + '\'' +
+                ", address='" + address + '\'' +
+                ", allEmail='" + allEmail + '\'' +
+                ", firstEmail='" + firstEmail + '\'' +
+                ", secondEmail='" + secondEmail + '\'' +
+                ", thirdEmail='" + thirdEmail + '\'' +
+                ", group='" + group + '\'' +
+                ", allPhones='" + allPhones + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                '}';
     }
 }

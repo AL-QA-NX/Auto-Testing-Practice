@@ -1,0 +1,50 @@
+<list>
+  <contact>
+    <id>0</id>
+    <firstName>GeneratedContactFirstName 0</firstName>
+    <middleName>GeneratedContactMiddleName 0</middleName>
+    <lastName>GeneratedContactLastName 0</lastName>
+    <nickname>GeneratedContactNickname 0</nickname>
+    <company>GeneratedContactCompany 0</company>
+    <address>GeneratedContactAddress 0</address>
+    <firstEmail>smythpbiyx@gmail.com</firstEmail>
+    <secondEmail>rklmdff5xbj@outlook.com</secondEmail>
+    <thirdEmail>vxzu1s@gmail.com</thirdEmail>
+    <group>GroupName</group>
+    <homePhone>2623236</homePhone>
+    <mobilePhone>+79892532047</mobilePhone>
+    <workPhone>135133</workPhone>
+  </contact>
+  <contact>
+    <id>0</id>
+    <firstName>GeneratedContactFirstName 1</firstName>
+    <middleName>GeneratedContactMiddleName 1</middleName>
+    <lastName>GeneratedContactLastName 1</lastName>
+    <nickname>GeneratedContactNickname 1</nickname>
+    <company>GeneratedContactCompany 1</company>
+    <address>GeneratedContactAddress 1</address>
+    <firstEmail>12fxtl0o@mail.ru</firstEmail>
+    <secondEmail>rzu3qmqd76m@mail.ru</secondEmail>
+    <thirdEmail>4gugvotzvsmc@outlook.com</thirdEmail>
+    <group>GroupName</group>
+    <homePhone>2657021</homePhone>
+    <mobilePhone>+79347385248</mobilePhone>
+    <workPhone>551011</workPhone>
+  </contact>
+  <contact>
+    <id>0</id>
+    <firstName>GeneratedContactFirstName 2</firstName>
+    <middleName>GeneratedContactMiddleName 2</middleName>
+    <lastName>GeneratedContactLastName 2</lastName>
+    <nickname>GeneratedContactNickname 2</nickname>
+    <company>GeneratedContactCompany 2</company>
+    <address>GeneratedContactAddress 2</address>
+    <firstEmail>7jz8vfck@example.com</firstEmail>
+    <secondEmail>m219mh153@outlook.com</secondEmail>
+    <thirdEmail>38iye@mail.ru</thirdEmail>
+    <group>GroupName</group>
+    <homePhone>2872204</homePhone>
+    <mobilePhone>+79130699021</mobilePhone>
+    <workPhone>253231</workPhone>
+  </contact>
+</list>

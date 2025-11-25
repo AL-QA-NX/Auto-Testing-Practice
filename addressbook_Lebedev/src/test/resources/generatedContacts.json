@@ -1,0 +1,47 @@
+[
+  {
+    "firstName": "GeneratedContactFirstName 0",
+    "middleName": "GeneratedContactMiddleName 0",
+    "lastName": "GeneratedContactLastName 0",
+    "nickname": "GeneratedContactNickname 0",
+    "company": "GeneratedContactCompany 0",
+    "address": "GeneratedContactAddress 0",
+    "firstEmail": "udlh9@example.com",
+    "secondEmail": "9b8kpbn85j@yahoo.com",
+    "thirdEmail": "rgpggab@gmail.com",
+    "group": "GroupName",
+    "homePhone": "2483400",
+    "mobilePhone": "+79403241753",
+    "workPhone": "031111"
+  },
+  {
+    "firstName": "GeneratedContactFirstName 1",
+    "middleName": "GeneratedContactMiddleName 1",
+    "lastName": "GeneratedContactLastName 1",
+    "nickname": "GeneratedContactNickname 1",
+    "company": "GeneratedContactCompany 1",
+    "address": "GeneratedContactAddress 1",
+    "firstEmail": "dps1bpo9c@mail.ru",
+    "secondEmail": "ube2arqd@example.com",
+    "thirdEmail": "85f6ibj58h4r@mail.ru",
+    "group": "GroupName",
+    "homePhone": "2850068",
+    "mobilePhone": "+79290480629",
+    "workPhone": "104235"
+  },
+  {
+    "firstName": "GeneratedContactFirstName 2",
+    "middleName": "GeneratedContactMiddleName 2",
+    "lastName": "GeneratedContactLastName 2",
+    "nickname": "GeneratedContactNickname 2",
+    "company": "GeneratedContactCompany 2",
+    "address": "GeneratedContactAddress 2",
+    "firstEmail": "d5pcxl@outlook.com",
+    "secondEmail": "khhwr@outlook.com",
+    "thirdEmail": "qsyg7@yahoo.com",
+    "group": "GroupName",
+    "homePhone": "2860092",
+    "mobilePhone": "+79299873763",
+    "workPhone": "304041"
+  }
+]

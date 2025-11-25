@@ -1,13 +1,27 @@
 package lebedev.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.util.Objects;
 
 import static java.lang.Integer.MAX_VALUE;
 
+
+@XStreamAlias("group")
 public class GroupData {
+
+    @XStreamOmitField
     private int id = MAX_VALUE;
+
+    @Expose
     private String name;
+
+    @Expose
     private String header;
+
+    @Expose
     private String footer;
 
     public int getId() {return id;}
@@ -48,6 +62,16 @@ public class GroupData {
         int result = id;
         result = 31 * result + Objects.hashCode(name);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", header='" + header + '\'' +
+                ", footer='" + footer + '\'' +
+                '}';
     }
 }
 
