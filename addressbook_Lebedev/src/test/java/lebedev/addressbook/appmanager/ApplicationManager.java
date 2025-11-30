@@ -6,9 +6,15 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Browser;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 public class ApplicationManager {
 
     private final Browser selectedBrowser;
+    private final Properties properties;
     public WebDriver webDriver;
 
     private SessionHelper sessionHelper;
@@ -21,9 +27,12 @@ public class ApplicationManager {
 
     public ApplicationManager(Browser selectedBrowser) {
         this.selectedBrowser = selectedBrowser;
+        properties = new Properties();
     }
 
-    public void initialize() {
+    public void initialize() throws IOException {
+        String target = System.getProperty("target","local");
+        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
         if (selectedBrowser.equals(Browser.FIREFOX)) {
             webDriver = new FirefoxDriver();
         } else if (selectedBrowser.equals(Browser.CHROME)) {
@@ -36,8 +45,8 @@ public class ApplicationManager {
         navigationHelper = new NavigationHelper(webDriver);
         groupHelper = new GroupHelper(webDriver);
         contactHelper = new ContactHelper(webDriver);
-        webDriver.get("http://localhost/addressbook/");
-        sessionHelper.login("admin","secret");
+        webDriver.get(properties.getProperty("web.baseUrl"));
+        sessionHelper.login(properties.getProperty("web.adminLogin"),properties.getProperty("web.adminPassword"));
     }
 
     public void stop() {
